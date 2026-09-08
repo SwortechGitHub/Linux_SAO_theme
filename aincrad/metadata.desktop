@@ -1,0 +1,16 @@
+[SddmGreeterTheme]
+Name=Aincrad
+
+Description=Custom made aincrad themed login screen
+Type=sddm-theme
+Author=Benedikts Kuzmovs
+# Copyright=
+# Screenshot=
+# License=
+Version=0.1
+MainScript=Main.qml
+ConfigFile=theme.conf
+# TranslationsDirectory=translations
+# Theme-Id=aincrad
+# Theme-API=2.0
+# Website=https://github.com/sddm/sddm
