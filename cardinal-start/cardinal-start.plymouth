@@ -1,0 +1,9 @@
+[Plymouth Theme]
+Name=cardinal-start
+Description=launches cardinal start up
+Comment=created By Benedikts Kuzmovs
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/cardinal-start
+ScriptFile=/usr/share/plymouth/themes/cardian-start/cardinal-start.script

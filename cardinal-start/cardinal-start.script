@@ -1,0 +1,33 @@
+// Configurable variables
+total_images = 39;
+frame_delay = 3; # Adjust to speed up/slow down animation
+
+// 1. Load images dynamically in a loop
+for (i = 1; i <= total_images; i++) {
+    # Plymouth automatically converts numbers to strings during concatenation
+    bg_images[i - 1] = Image("image" + i + ".png");
+}
+
+// 2. Setup Sprite container
+bg_sprite = Sprite();
+bg_sprite.SetX(0);
+bg_sprite.SetY(0);
+
+current_frame = 0;
+ticks = 0;
+
+// 3. Animation loop: advance once, then pause at the end
+fun refresh_callback () {
+    bg_sprite.SetImage(bg_images[current_frame]);
+
+    # Stop advancing once we hit index 38 (39th image)
+    if (current_frame < total_images - 1) {
+        ticks++;
+        if (ticks >= frame_delay) {
+            ticks = 0;
+            current_frame++;
+        }
+    }
+}
+
+Plymouth.SetRefreshFunction(refresh_callback);
