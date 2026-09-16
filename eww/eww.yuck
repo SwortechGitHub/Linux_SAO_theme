@@ -1,0 +1,62 @@
+;;---------- Battery Polls
+(defpoll battery_percent :interval "5s"
+  "cat /sys/class/power_supply/BAT0/capacity 2>/dev/null || echo 75")
+
+(defpoll battery_status :interval "5s"
+  "cat /sys/class/power_supply/BAT0/status 2>/dev/null || echo Charging")
+
+(defpoll BATTERY_PATH :interval "1s" "scripts/update_gauge.sh")
+
+(defwindow battery
+    :monitor 0
+    :geometry (geometry
+                    :width "500px"
+                    :height "115px"
+                    :x "30px"
+                    :y "10px"
+                    :anchor "top left")
+    :stacking "bg"
+    :exclusive false
+
+    (box :class "battery-box"
+         :orientation "v"
+         :space-evenly false
+      (label 
+          :class "battery-name"
+          :halign "start"
+          :valign "start"
+          :text "Battery")
+
+      (image :path BATTERY_PATH
+             :image-width 500
+             :image-height 115)
+      ))
+;;Colors
+;;#939409 #B4B733 yellow 54.75%
+;;#890034 #AE0750 red  21.25%
+
+;;------------Clock window---------------
+;; Polls system time every second
+(defpoll clock_time :interval "1s" "date '+%H:%M'")
+
+;; Clock Widget
+(defwidget clock_widget []
+  (box :class "clock-box"
+       :orientation "v"
+       :space-evenly false
+       :valign "center"
+       :halign "center"
+    (label :class "clock-time" :text clock_time)))
+
+;; Clock Window Definition
+(defwindow clock
+  :monitor 0
+  :geometry (geometry
+              :x "20px"
+              :y "20px"
+              :width "200px"
+              :height "100px"
+              :anchor "bottom right")
+  :stacking "fg"
+  :exclusive false
+  (clock_widget))
