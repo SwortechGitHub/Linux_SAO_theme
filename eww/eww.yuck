@@ -60,3 +60,74 @@
   :stacking "fg"
   :exclusive false
   (clock_widget))
+
+
+;; ==========================================
+;; VARIABLES (State Management)
+;; ==========================================
+;;icons
+(defvar config_icon "images/Config.svg")
+(defvar man_icon "images/Man.svg")
+(defvar message_icon "images/Message.svg")
+;;functional
+(defvar active_menu "")
+(defvar menu_columns "[]")
+;; ==========================================
+;; WIDGET DEFINITIONS
+;; ==========================================
+
+(defwidget center_menu []
+  (box :class "menu-center" :orientation "vertical" :spacing 10 :space-evenly false
+    (button :class "icon-btn"
+      :onclick "eww update active_menu=${active_menu!='config'?'config': ''} config_icon=${config_icon=='images/Config.svg'?'images/Config_on.svg':'images/Config.svg'} && /home/swortech/.config/eww/scripts/menu_manager open config"
+      (image :class "menu-icon" :path config_icon :halign "center" :valign "center" :image-width 70 :preserve-aspect-ratio true))
+    
+    (button :class "icon-btn"
+      :onclick "eww update man_icon=${man_icon == 'images/Man.svg' ? 'images/Man_on.svg' : 'images/Man.svg'}"
+      (image :class "menu-icon" :path man_icon :halign "center" :valign "center" :image-width 70 :preserve-aspect-ratio true))
+    
+    (button :class "icon-btn"
+      :onclick "eww update message_icon=${message_icon == 'images/Message.svg' ? 'images/Message_on.svg' : 'images/Message.svg'}"
+      (image :class "menu-icon" :path message_icon :halign "center" :valign "center" :image-width 70 :preserve-aspect-ratio true))
+    ))
+
+(defwindow right_menu
+  :monitor 0
+  :stacking "fg"
+  :geometry (geometry
+              :anchor "top left"
+            )
+  (expander  :expanded {active_menu != ""}
+
+    (box :class "columns-container"
+         :orientation "vertical"
+         :space-evenly true
+         :width 900
+         :height 200
+         (label :text "${menu_columns}")
+         (label :text "${menu_columns.config[0].label}")
+    )
+  )
+)
+
+; (defwidget left_menu)
+
+;; ==========================================
+;; WINDOW DEFINITION
+;; ==========================================
+(defwindow main_menu
+  :monitor 0
+  :stacking "fg"
+  :windowtype "normal"
+  :wm-ignore true
+  :geometry (geometry
+              :height "70%"
+              :anchor "center"
+            )
+  (box :class "window-root"
+       :orientation "horizontal"
+       :space-evenly false
+    ; (left_menu)
+    (center_menu)
+    ; (right_menu)
+    ))

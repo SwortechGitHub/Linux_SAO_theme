@@ -12,8 +12,8 @@
         </clipPath>
 
         <linearGradient id="1st_hp_a" gradientUnits="userSpaceOnUse" x1="921.217" y1="61" x2="921.217" y2="133">
-            <stop offset="0" stop-color="#65A719" />
-            <stop offset="1" stop-color="#87D529" />
+            <stop offset="0" stop-color="#A77E19" />
+            <stop offset="1" stop-color="#D5AA29" />
         </linearGradient>
     </defs>
 

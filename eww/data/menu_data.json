@@ -1,0 +1,17 @@
+{
+  "config": [
+    {
+      "id": "display",
+      "label": "Display Settings",
+      "children": [
+        { "id": "res", "label": "Resolution", "exec": "arandr" }
+      ]
+    }
+  ],
+  "man": [
+    { "id": "manuals", "label": "Eww Docs", "exec": "kitty -e man eww" }
+  ],
+  "message": [
+    { "id": "notifs", "label": "Notifications", "exec": "dunstctl history-pop" }
+  ]
+}

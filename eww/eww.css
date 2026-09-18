@@ -11,6 +11,7 @@ window {
     background-position: center;
     color: white;
 } */
+
 .battery-box {
     background-color: transparent;
 }
@@ -32,4 +33,54 @@ window {
     font-family: "SAO UI";
     font-size: 50px;
     background-color: transparent;
+    color: rgba(200, 200, 200, 0.5)
+}
+
+.menu-center {
+  padding: 10px 0;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  padding: 0;
+}
+
+/* right side */
+.main-menu-container {
+  background-color: white;
+}
+
+.columns-container {
+  padding: 4px;
+  background-color: white;
+}
+
+.menu-column {
+  background-color: #1e1e2e;
+  border: 1px solid #313244;
+  border-radius: 12px;
+  padding: 8px;
+  min-width: 180px; /* Forces column to take up visible width */
+  min-height: 200px;
+}
+
+.menu-item-btn {
+  background: transparent;
+  border: none;
+  color: #cdd6f4;
+  padding: 8px 12px;
+  border-radius: 6px;
+  min-height: 30px;
+}
+
+.menu-item-btn:hover {
+  background-color: #313244;
+}
+
+.menu-item-btn.active {
+  background-color: #45475a;
+  font-weight: bold;
 }
