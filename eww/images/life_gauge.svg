@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1620" height="376">
+<svg xmlns="http://www.w3.org/2000/svg" width="1620" height="188">
     <defs>
         <!-- Using clipPath fixes the GTK librsvg black background bug -->
         <clipPath id="gauge_clip">
-            <polygon transform="translate(-579, 0)" points="
+            <polygon transform="translate(0, 0)" points="
                 330,-10 
                 1540,-10 
                 1428,184 
@@ -12,8 +12,8 @@
         </clipPath>
 
         <linearGradient id="1st_hp_a" gradientUnits="userSpaceOnUse" x1="921.217" y1="61" x2="921.217" y2="133">
-            <stop offset="0" stop-color="#A77E19" />
-            <stop offset="1" stop-color="#D5AA29" />
+            <stop offset="0" stop-color="#65A719" />
+            <stop offset="1" stop-color="#87D529" />
         </linearGradient>
     </defs>
 

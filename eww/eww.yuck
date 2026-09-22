@@ -1,39 +1,30 @@
 ;;---------- Battery Polls
-(defpoll battery_percent :interval "5s"
-  "cat /sys/class/power_supply/BAT0/capacity 2>/dev/null || echo 75")
+; (defpoll battery_percent :interval "5s"
+;   "cat /sys/class/power_supply/BAT0/capacity 2>/dev/null || echo 75")
 
-(defpoll battery_status :interval "5s"
-  "cat /sys/class/power_supply/BAT0/status 2>/dev/null || echo Charging")
+; (defpoll battery_status :interval "5s"
+;   "cat /sys/class/power_supply/BAT0/status 2>/dev/null || echo Charging")
 
-(defpoll BATTERY_PATH :interval "1s" "scripts/update_gauge.sh")
+(defpoll BATTERY_PATH :interval "5s" "scripts/update_gauge.sh")
 
 (defwindow battery
     :monitor 0
-    :geometry (geometry
-                    :width "500px"
-                    :height "115px"
-                    :x "30px"
-                    :y "10px"
-                    :anchor "top left")
+    :geometry (geometry :x "30px":y "10px")
     :stacking "bg"
-    :exclusive false
 
-    (box :class "battery-box"
-         :orientation "v"
-         :space-evenly false
-      (label 
-          :class "battery-name"
-          :halign "start"
-          :valign "start"
-          :text "Battery")
-
-      (image :path BATTERY_PATH
-             :image-width 500
-             :image-height 115)
-      ))
-;;Colors
-;;#939409 #B4B733 yellow 54.75%
-;;#890034 #AE0750 red  21.25%
+    (box :space-evenly false
+      (overlay
+        (image :class "svg-icon"
+                :path "${BATTERY_PATH}"
+                :image-height 45
+              )
+        (label :class "battery-name"
+              :xalign 0.08
+              :valign "center"
+              :text "Battery")
+          )
+        )
+    )
 
 ;;------------Clock window---------------
 ;; Polls system time every second
