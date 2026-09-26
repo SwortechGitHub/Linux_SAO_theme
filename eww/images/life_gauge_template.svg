@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1620" height="188">
+    <defs>
+        <!-- Using clipPath fixes the GTK librsvg black background bug -->
+        <clipPath id="gauge_clip">
+            <polygon transform="translate(-382, 0)" points="
+                330,-10 
+                1540,-10 
+                1428,184 
+                330,184
+            " />
+        </clipPath>
+
+        <linearGradient id="1st_hp_a" gradientUnits="userSpaceOnUse" x1="921.217" y1="61" x2="921.217" y2="133">
+            <stop offset="0" stop-color="#65A719" />
+            <stop offset="1" stop-color="#87D529" />
+        </linearGradient>
+    </defs>
+
+    <g id="1st">
+        <g id="bg">
+            <polygon id="gauge_bg" opacity=".09" fill="#fff" points="951.315,104.5 930.53,140.5 332.95,140.5 332.95,53.5 1514.975,53.5 1485.53,104.5" />
+            <path opacity=".3" fill="#fff" d="M0 0h91v194h-91v-47.5h32c9.665 0 17.5-7.835 17.5-17.5v-64c0-9.665-7.835-17.5-17.5-17.5h-32v-47.5z" />
+            
+            <g id="without_status">
+                <linearGradient id="1st_bg_a" gradientUnits="userSpaceOnUse" x1="100.5" y1="97" x2="1620" y2="97">
+                    <stop offset="0" stop-color="#fff" stop-opacity=".3" />
+                    <stop offset="1" stop-color="#fff" stop-opacity=".01" />
+                </linearGradient>
+                <path fill="url(#1st_bg_a)" d="M1620 0l-112.006 194h-1407.494v-194h1519.5zm-105.025 53.5h-1182.025v87h597.58l20.785-36h534.215l29.445-51z" />
+            </g>
+        </g>
+
+        <!-- Using clip-path instead of mask -->
+        <g id="gauge" clip-path="url(#gauge_clip)">
+            <g id="green">
+                <g>
+                    <polygon fill="url(#1st_hp_a)" points="946.985,97 1481.2,97 1501.985,61 340.45,61 340.45,133 926.2,133" />
+                </g>
+                <g id="max (10%)">
+                    <polygon fill="#93C856" points="1481.2,97 1501.985,61 1455.784,61 1435,97" />
+                </g>
+            </g>
+        </g>
+
+        <g id="wrapper">
+            <path fill="#373737" d="M330.75 50.5v92h601.523l20.785-36h534.215l32.332-56h-1188.855zm1150.45 46.5h-534.215l-20.785 36h-585.75v-72h1161.535l-20.785 36z" />
+            <linearGradient id="1st_w_a" gradientUnits="userSpaceOnUse" x1="925.061" y1="49" x2="925.061" y2="142">
+                <stop offset="0" stop-color="#373232" />
+                <stop offset="1" stop-color="#161616" />
+            </linearGradient>
+            <path fill="url(#1st_w_a)" d="M1520.171 49h-1190.221v93h602.312l20.785-36h534.215l32.909-57zm-568.856 54l-20.785 36h-597.58v-87h1182.025l-29.445 51h-534.215z" />
+            <path fill="#FBFBFB" d="M1520.171 50.5h-1190.221v93h602.312l20.785-36h534.215l32.909-57zm-568.856 54l-20.785 36h-597.58v-87h1182.025l-29.445 51h-534.215z" />
+        </g>
+    </g>
+</svg>

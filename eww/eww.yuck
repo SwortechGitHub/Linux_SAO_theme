@@ -1,30 +1,29 @@
-;;---------- Battery Polls
-; (defpoll battery_percent :interval "5s"
-;   "cat /sys/class/power_supply/BAT0/capacity 2>/dev/null || echo 75")
-
-; (defpoll battery_status :interval "5s"
-;   "cat /sys/class/power_supply/BAT0/status 2>/dev/null || echo Charging")
-
+;;---------- Battery--------------------
 (defpoll BATTERY_PATH :interval "5s" "scripts/update_gauge.sh")
 
 (defwindow battery
     :monitor 0
     :geometry (geometry :x "30px":y "10px")
-    :stacking "bg"
+    :stacking "fg"
 
-    (box :space-evenly false
+    (box :space-evenly false :class "battery"
       (overlay
-        (image :class "svg-icon"
+        (image :class "gauge"
                 :path "${BATTERY_PATH}"
                 :image-height 45
               )
-        (label :class "battery-name"
+        (label :class "name"
               :xalign 0.08
               :valign "center"
               :text "Battery")
           )
-        )
+      (image :class "icon"
+       :path "${EWW_BATTERY.BAT0.status == 'Charging' ? './images/Energy_icon.svg' : 'null'}"
+       :image-width 35
+       :image-height 35
+      )
     )
+  )
 
 ;;------------Clock window---------------
 ;; Polls system time every second
@@ -52,73 +51,77 @@
   :exclusive false
   (clock_widget))
 
+;;------------Menu--------------------
+(defvar menus '[{"name":"config","widgets":3},{"name":"man","widgets":4},{"name":"message","widgets":2}]')
+(defvar selected "")
 
-;; ==========================================
-;; VARIABLES (State Management)
-;; ==========================================
-;;icons
-(defvar config_icon "images/Config.svg")
-(defvar man_icon "images/Man.svg")
-(defvar message_icon "images/Message.svg")
-;;functional
-(defvar active_menu "")
-(defvar menu_columns "[]")
-;; ==========================================
-;; WIDGET DEFINITIONS
-;; ==========================================
+(defwidget menuButton [name]
+  (button :class "dropdown ${name} ${selected == name ? 'active' : ''}"
+          :height 45
+          :width 45
+          :onclick "eww update selected=${selected != name ? name : ''}"
+  )
+)
 
-(defwidget center_menu []
-  (box :class "menu-center" :orientation "vertical" :spacing 10 :space-evenly false
-    (button :class "icon-btn"
-      :onclick "eww update active_menu=${active_menu!='config'?'config': ''} config_icon=${config_icon=='images/Config.svg'?'images/Config_on.svg':'images/Config.svg'} && /home/swortech/.config/eww/scripts/menu_manager open config"
-      (image :class "menu-icon" :path config_icon :halign "center" :valign "center" :image-width 70 :preserve-aspect-ratio true))
-    
-    (button :class "icon-btn"
-      :onclick "eww update man_icon=${man_icon == 'images/Man.svg' ? 'images/Man_on.svg' : 'images/Man.svg'}"
-      (image :class "menu-icon" :path man_icon :halign "center" :valign "center" :image-width 70 :preserve-aspect-ratio true))
-    
-    (button :class "icon-btn"
-      :onclick "eww update message_icon=${message_icon == 'images/Message.svg' ? 'images/Message_on.svg' : 'images/Message.svg'}"
-      (image :class "menu-icon" :path message_icon :halign "center" :valign "center" :image-width 70 :preserve-aspect-ratio true))
-    ))
+(defwidget subMenu [text]
+  (label :class "menu-item"
+         :height 30
+         :width 200
+         :text text)
+)
 
-(defwindow right_menu
-  :monitor 0
-  :stacking "fg"
-  :geometry (geometry
-              :anchor "top left"
-            )
-  (expander  :expanded {active_menu != ""}
-
-    (box :class "columns-container"
-         :orientation "vertical"
-         :space-evenly true
-         :width 900
-         :height 200
-         (label :text "${menu_columns}")
-         (label :text "${menu_columns.config[0].label}")
+(defwidget centerLayout []
+  (box :orientation "v" :width 45 :spacing 20 :class "dropdowns" :space-evenly false
+    (for menu in menus
+      (menuButton :name {menu.name})
     )
   )
 )
 
-; (defwidget left_menu)
+(defwidget configMenu []
+  (box :class "subMenu" :orientation "v" :spacing 4 :space-evenly false 
+    (subMenu :text "test")
+    (subMenu :text "test")
+    (subMenu :text "test")
+    (subMenu :text "test")
+  )
+)
 
-;; ==========================================
-;; WINDOW DEFINITION
-;; ==========================================
-(defwindow main_menu
-  :monitor 0
-  :stacking "fg"
-  :windowtype "normal"
-  :wm-ignore true
-  :geometry (geometry
-              :height "70%"
-              :anchor "center"
-            )
-  (box :class "window-root"
-       :orientation "horizontal"
-       :space-evenly false
-    ; (left_menu)
-    (center_menu)
-    ; (right_menu)
-    ))
+(defwidget manMenu []
+  (box :class "subMenu" :orientation "v" :spacing 4 :space-evenly false
+    (subMenu :text "test")
+    (subMenu :text "test")
+  )
+)
+
+(defwidget messageMenu []
+  (box :class "subMenu" :orientation "v" :spacing 4 :space-evenly false
+    (subMenu :text "test")
+    (subMenu :text "test")
+    (subMenu :text "test")
+  )
+)
+
+(defwidget rightLayout []
+  (box :class "right-panel" :height 100
+    (box :visible {selected == "config"} (configMenu))
+    (box :visible {selected == "man"} (manMenu))
+    (box :visible {selected == "message"} (messageMenu))
+  )
+)
+
+;; WRAPPED IN A HORIZONTAL BOX ROOT ELEMENT
+(defwidget layout []
+  (box :orientation "h" :spacing 4 :space-evenly false :height 400 :width 200 
+    (centerLayout)
+    (rightLayout)
+  )
+)
+
+(defwindow mainMenu
+    :monitor 0
+    :geometry (geometry :x "30px" :y "10px")
+    :stacking "fg"
+
+    (layout)
+)
